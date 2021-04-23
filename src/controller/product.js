@@ -20,6 +20,7 @@ const getProduct = async (req, res) => {
         if (userInfo.keyWord) {
             result = await product.find({
                 $match: {
+                    isDisplay: true,
                     $or: [{
                             name: {
                                 $regex: userInfo.keyWord
@@ -34,7 +35,7 @@ const getProduct = async (req, res) => {
                 }
             }).skip(skip).limit(limit)
         } else {
-            result = await product.find().skip(skip).limit(limit)
+            result = await product.find({isDisplay:true}).skip(skip).limit(limit)
         }
         let count = await product.count();
         let temp = {
